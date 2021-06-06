@@ -1,0 +1,16 @@
+!jest.config.js
+.DS_Store
+*.d.ts
+node_modules
+.env
+.vscode/
+yarn-error.log
+dist/
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+cdk.context.json
+
+# Parcel default cache directory
+.parcel-cache

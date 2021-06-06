@@ -1,0 +1,32 @@
+name: CDK-Check
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Modules
+        run: yarn install
+
+      - name: TypeCheck
+        run: yarn type-check
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test

@@ -1,0 +1,52 @@
+{
+  "name": "cdk-cff-redirect-sample",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-cff-redirect-sample": "bin/cdk-cff-redirect-sample.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:lambda": "esbuild src/lambda/index.ts --minify --outfile=src/lambda/dist/index.js --target=es5",
+    "test": "jest",
+    "type-check": "tsc --noEmit",
+    "lint:secret": "secretlint '**/*'",
+    "lint": "eslint --fix && yarn run lint:secret",
+    "format": "prettier ./src",
+    "create:stg": "yarn build:lambda && cdk deploy {HostedZoneStack-staging,CertificateManagerStack-staging,CloudFrontStack-staging} --context environment=staging --require-approval never",
+    "deploy:stg": "cdk deploy DeploymentStack-staging --context environment=staging --require-approval never",
+    "synth:stg": "cdk synth DeploymentStack-staging --context environment=staging --require-approval never",
+    "destroy:stg": "cdk destroy \"*\" --context environment=staging"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.107.0",
+    "@aws-cdk/aws-lambda": "^1.107.0",
+    "@secretlint/secretlint-rule-aws": "^3.0.0",
+    "@types/aws-lambda": "^8.10.77",
+    "@types/dotenv": "^8.2.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "aws-cdk": "1.107.0",
+    "dotenv": "^10.0.0",
+    "esbuild": "^0.12.6",
+    "eslint": "^7.28.0",
+    "jest": "^26.4.2",
+    "prettier": "^2.3.0",
+    "secretlint": "^3.0.0",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-certificatemanager": "^1.107.0",
+    "@aws-cdk/aws-cloudfront": "^1.107.0",
+    "@aws-cdk/aws-route53": "^1.107.0",
+    "@aws-cdk/aws-route53-targets": "^1.107.0",
+    "@aws-cdk/aws-s3-deployment": "^1.107.0",
+    "@aws-cdk/aws-sns": "1.107.0",
+    "@aws-cdk/aws-sns-subscriptions": "1.107.0",
+    "@aws-cdk/aws-sqs": "1.107.0",
+    "@aws-cdk/core": "1.107.0"
+  }
+}
